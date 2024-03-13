@@ -7,6 +7,16 @@ import numpy as np
 from collections import Counter
 from rouge import Rouge
 
+def read_data(path):
+    if 'json' in path:
+        with open(path, "r", encoding='utf-8') as f:
+            datas = json.load(f)
+    else:
+        with open(path, "r", encoding='utf-8') as f:
+            datas = [_data.strip('\n') for _data in f.readlines()]
+
+    return datas
+
 def hits(ans, res):
     n = 0
     res = normalize_answer(res)
@@ -181,22 +191,18 @@ def eval_recall(infile):
 
 def eval_question_answering(infile, end="**"):
 
-    lines = open(infile, 'r').readlines()[1:]
-    # print(len(lines))
-    # lines = lines[:4]
+    lines = read_data(infile)
 
     exact_match_count = 0
     cover_exact_match_count = 0
     answer_lengths = []
     f1_scores = []
     for line in lines:
-        line = json.loads(line)
-        # print(line)
         answer = line['answer']
-        output = line['output'][0] if line['output'] else ''
+        output = line['output'] if line['output'] else ''
         if end:
             output = output.split(end)[0]
-            output = output.split('\n')[0] # added 
+            # output = output.split('\n')[0] # added 
 
         if ems(output, answer): # EM evaluation
             # print(ems(output, answer))

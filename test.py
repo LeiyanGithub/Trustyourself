@@ -40,3 +40,4 @@ data_path = './dataset/hotpot_dev_distractor_v1.json'
 hotpotqa_distractor = read_data(data_path)
 
 write_list('./dataset/hotpotqa.json', hotpotqa_distractor)
+

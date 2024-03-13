@@ -189,6 +189,7 @@ def rewrite(args, max_tokens, prompt):
 
 if __name__ == "__main__":
 
+    # 涉及一个source ,target的目录和文件
     parser = argparse.ArgumentParser()
     
     # Required parameters

@@ -133,6 +133,8 @@ def model_generate(temperature=0.7, repetition_penalty=1.0, max_new_tokens=1024,
             results_outputs.append(outputs[index].split("答：")[-1])
         elif 'llama' in args.model_path.lower():
             results_outputs.append(outputs[index].split("[/INST]")[-1])
+        elif 'qwen' in args.model_path.lower():
+            results_outputs.append(outputs[index].split("assistant")[-1])
     
     return results_outputs
 
