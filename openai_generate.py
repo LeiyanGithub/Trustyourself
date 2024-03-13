@@ -10,7 +10,7 @@ class OpenAIChat():
     def __init__(
             self,
             model_name='gpt-3.5-turbo',
-            max_tokens=100,
+            max_tokens=1024,
             temperature=0.3,
             top_p=1,
             request_timeout=600,

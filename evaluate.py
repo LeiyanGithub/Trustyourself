@@ -88,7 +88,7 @@ def _normalize(text):
 def normalize_answer(s):
     def remove_articles(text):
         s = r'\b(an|the)\b'
-        print('normalize: ', s)
+        # print('normalize: ', s)
         return regex.sub(s, ' ', text) # dont remove a for mmlu
 
     def white_space_fix(text):
@@ -99,8 +99,6 @@ def normalize_answer(s):
         return ''.join(ch for ch in text if ch not in exclude)
 
     def lower(text):
-        if type(text) == list:
-            print(text)
         return text.lower()
 
     return white_space_fix(remove_articles(remove_punc(lower(s))))
@@ -111,7 +109,7 @@ def exact_match_score(prediction, ground_truth):
     if type(ground_truth) == list: #physics
         ground_truth = ','.join(ground_truth)
         # print(ground_truth, prediction)
-    print(ground_truth, prediction)
+    # print(ground_truth, prediction)
     return normalize_answer(ground_truth) in normalize_answer(prediction)
 
 def cover_exact_match_score(prediction, ground_truth):
@@ -119,7 +117,7 @@ def cover_exact_match_score(prediction, ground_truth):
     if type(ground_truth) == list: #physics
         ground_truth = ','.join(ground_truth)
         # print(ground_truth, prediction)
-    print(ground_truth, prediction)
+    # print(ground_truth, prediction)
     return normalize_answer(ground_truth) in normalize_answer(prediction)
 
 
@@ -201,7 +199,7 @@ def eval_question_answering(infile, end="**"):
         answer = line['answer']
         output = line['output'] if line['output'] else ''
         if end:
-            output = output.split(end)[0]
+            output = max(output.split(end), key=len)
             # output = output.split('\n')[0] # added 
 
         if ems(output, answer): # EM evaluation
@@ -220,6 +218,6 @@ def eval_question_answering(infile, end="**"):
     lens = round(np.mean(answer_lengths), 4)
     F1 = round(np.mean(f1_scores), 4)
     em_f1 = round(f1_scores.count(1)/len(lines), 4)
-    print(exact_match_count, len(lines))
-    print(em, coverem, F1, em_f1)
+    # print(exact_match_count, len(lines))
+    # print(em, coverem, F1, em_f1)
     return em, coverem, lens, F1

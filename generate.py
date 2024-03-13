@@ -82,20 +82,9 @@ def convert_prompt(prompt):
     return text
 
 def construct_prompt(args):
+    # 如果目标目录存在，则不需要新建
     # 选择prompt, pos_num, neg_num, 构造prompt，设置output
-    source_file = ''
-    target_file = ''
-    if args.source == 'raw':
-        # 原始文件，未被改写
-        source_file = f'./dataset/{args.dataset}.json'
-    else:
-        source_file = f'{args.output_dir}/{args.dataset}'
-    
-    target_file = f'{args.output_dir}/{args.dataset}/{args.nums}/'
-    os.makedirs(target_file, exist_ok=True)
-    target_file = f'{target_file}/{args.target}_pos_{args.pos_num}_neg_{args.neg_num}.json'
 
-    # 获取prompt
     promptlines = open(f'./prompt/{args.promptfile}.json', 'r').readlines()
     prompt = ''
     for line in promptlines:
@@ -103,34 +92,80 @@ def construct_prompt(args):
         if line['type'] == args.task:
             prompt = line['prompt']
 
+
+    source_file = ''
+    target_path = f'{args.output_dir}/{args.dataset}/{args.nums}/{args.task}'
+    if args.source == 'raw':
+        target_file = f'{target_path}/{args.target}_pos_{args.pos_num}_neg_{args.neg_num}.json'
+    else:
+        target_file = f'{target_path}/{args.source}_{args.target}_pos_{args.pos_num}_neg_{args.neg_num}.json'
+
+    if os.path.exists(target_file):
+        return target_file
+
+    os.makedirs(target_path, exist_ok=True)
+    if args.source == 'raw':
+        # 原始文件，未被改写
+        source_file = f'./dataset/{args.dataset}.json'
+        dataset = readfiles(source_file)
+        source_dataset = []
+        index = 0
+        if args.nums:
+            while len(source_dataset) < args.nums:
+                if 'neg' in dataset[index]:
+                    source_dataset.append(dataset[index])
+                index += 1
+        
+        temp_prompts = []
+        for index in range(len(source_dataset)):
+            # 构造promtp
+            print(' '.join(source_dataset[index]['neg'][:args.neg_num]))
+            source_dataset[index]['passage'] = ' '.join(source_dataset[index]['pos'][:args.pos_num])
+            source_dataset[index]['passage'] += ' '.join(source_dataset[index]['neg'][:args.neg_num])
+            input_with_prompt = add_prompt(source_dataset[index], prompt)
+            temp_prompts.append({
+                "question": source_dataset[index]['question'],
+                "answer": source_dataset[index]['answer'],
+                "prompt": input_with_prompt,
+                "output": ''
+            })
+        
+        # 将文件保存下来
+        write_list(target_file, temp_prompts)
+    else:
+        target_path =  f'{args.output_dir}/{args.dataset}/{args.nums}/query_rewrite'
+        source_file = f'{target_path}/{args.source}_pos_{args.pos_num}_neg_{args.neg_num}.json'
+        print("source_file: ", source_file)
+        source_dataset = read_data(source_file)
+        
+        print("source_file: ", source_file)
+        temp_prompts = []
+        for index in range(len(source_dataset)):
+            print("index: ", index)
+            print(source_dataset[index])
+            if source_dataset[index]['output'].split(':'):
+                source_dataset[index]['passage'] = max(source_dataset[index]['output'].split(':'), key=len)
+            else:
+                source_dataset[index]['passage'] = source_dataset[index]['output']
+            input_with_prompt = add_prompt(source_dataset[index], prompt)
+            temp_prompts.append({
+                "question": source_dataset[index]['question'],
+                "answer": source_dataset[index]['answer'],
+                "prompt": input_with_prompt,
+                "output": ''
+            })
+        
+        # 将文件保存下来
+        write_list(target_file, temp_prompts)
+    
+    
+    # 获取prompt
+    
+
     # 构造文件
     # 读取source file文件
     
-    dataset = readfiles(source_file)
-    source_dataset = []
-    index = 0
-    if args.nums:
-        while len(source_dataset) < args.nums:
-            if 'neg' in dataset[index]:
-                source_dataset.append(dataset[index])
-            index += 1
     
-    temp_prompts = []
-    for index in range(len(source_dataset)):
-        # 构造promtp
-        print(' '.join(source_dataset[index]['neg'][:args.neg_num]))
-        source_dataset[index]['passage'] = ' '.join(source_dataset[index]['pos'][:args.pos_num])
-        source_dataset[index]['passage'] += ' '.join(source_dataset[index]['neg'][:args.neg_num])
-        input_with_prompt = add_prompt(source_dataset[index], prompt)
-        temp_prompts.append({
-            "question": source_dataset[index]['question'],
-            "answer": source_dataset[index]['answer'],
-            "prompt": input_with_prompt,
-            "output": ''
-        })
-    
-    # 将文件保存下来
-    write_list(target_file, temp_prompts)
 
     return target_file
 
@@ -177,14 +212,16 @@ def get_rerun_indices(datasets):
         if 'output' not in datasets[index]:
             rerun_indices_tmp.append(index)
         else:
-            if not datasets[index]['output']:
+            if datasets[index]['output'] == '':
                 rerun_indices_tmp.append(index)
     
+    print("rerun_indices_tmp: ", rerun_indices_tmp)
     return rerun_indices_tmp
 
-async def run_with_batch_generate(args, dataset, save_path, batch_size=2, rerun=False, rerun_indices=[]):
+async def run_with_batch_generate(args, dataset, save_path, batch_size=4, rerun=False, rerun_indices=[]):
 
     sample_list = dataset
+    batch_size = args.batch_size
     rerun_elements = sample_list if not rerun else [sample_list[i] for i in rerun_indices]
     
     if args.target != 'gpt-3.5-turbo':
@@ -243,11 +280,12 @@ def add_prompt(item, prompt):
         return s.strip()
 
     query = item['question'].replace("\"", "")
-    passage = item['passage'].replace("\"", "")
+    passage = item['passage'].replace("\"", "").replace('\n', '\\n')
     prompt = prompt.replace('{query}', query)
     if item.get('passage'):
         prompt = prompt.replace('{passage}', passage)
     
+    print("prompt:", prompt)
     prompt = json.loads(prompt)
     return prompt
 
@@ -308,6 +346,7 @@ if __name__ == "__main__":
     # 数量设置
     parser.add_argument('--nums', type=int, default=1000)
     # 输出文件设置
+    parser.add_argument('--batch_size', type=int, default=2)
     parser.add_argument('--output_dir',type=str, default='./results')
 
     args = parser.parse_args()
@@ -320,32 +359,21 @@ if __name__ == "__main__":
     args.target_model_path = f'/home/liulian/yan/pytorch_model/{args.target}'
 
     if args.target != 'gpt-3.5-turbo':
-        if 'llama' in args.target.lower():
-            model = AutoModelForCausalLM.from_pretrained(
+        model = AutoModelForCausalLM.from_pretrained(
             args.target_model_path, 
             low_cpu_mem_usage=True,
             ).to(device)
 
-            tokenizer = AutoTokenizer.from_pretrained(
+        tokenizer = AutoTokenizer.from_pretrained(
             args.target_model_path,
             use_fast=True,
             revision='main'
             )
+        if 'llama' in args.target.lower():
             tokenizer.pad_token = tokenizer.eos_token
-
             model.config.eos_token_id = tokenizer.eos_token_id
             model.config.pad_token_id = tokenizer.pad_token_id
-            model.eval()
-        else:
-            tokenizer = AutoTokenizer.from_pretrained(
-                args.target_model_path, trust_remote_code=True, revision='main'
-            )
-            model = AutoModel.from_pretrained(
-                args.target_model_path, trust_remote_code=True,
-            ).to(device)
-            model.eval()
-        
-    
+        model.eval()
     dataset = read_data(output_file)
     rerun_indices = get_rerun_indices(dataset)
 
