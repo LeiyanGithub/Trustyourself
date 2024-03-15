@@ -135,18 +135,17 @@ def construct_prompt(args):
     else:
         target_path =  f'{args.output_dir}/{args.dataset}/{args.nums}/query_rewrite'
         source_file = f'{target_path}/{args.source}_pos_{args.pos_num}_neg_{args.neg_num}.json'
-        print("source_file: ", source_file)
         source_dataset = read_data(source_file)
         
         print("source_file: ", source_file)
         temp_prompts = []
         for index in range(len(source_dataset)):
             print("index: ", index)
-            print(source_dataset[index])
-            if source_dataset[index]['output'].split(':'):
-                source_dataset[index]['passage'] = max(source_dataset[index]['output'].split(':'), key=len)
-            else:
-                source_dataset[index]['passage'] = source_dataset[index]['output']
+            # print(source_dataset[index])
+            # if source_dataset[index]['output'].split(':'):
+            #     source_dataset[index]['passage'] = max(source_dataset[index]['output'].split(':'), key=len)
+            # else:
+            source_dataset[index]['passage'] = source_dataset[index]['output']
             input_with_prompt = add_prompt(source_dataset[index], prompt)
             temp_prompts.append({
                 "question": source_dataset[index]['question'],

@@ -1,1 +1,4 @@
 {"outputfile": "./results/hotpotqa/500/qa/llama-2-7b-chat-hf_pos_0_neg_2.json", "exact match": 0.074, "cover_em": 0.074, "F1": 0.0419, "length": 6.364}
+{"outputfile": "./results/hotpotqa/500/qa/llama-2-7b-chat-hf_pos_0_neg_2.json", "exact match": 0.16, "cover_em": 0.16, "F1": 0.1053, "length": 15.38}
+{"outputfile": "./results/hotpotqa/500/qa/llama-2-7b-chat-hf_pos_0_neg_2.json", "exact match": 0.16, "cover_em": 0.16, "F1": 0.1053, "length": 15.38}
+{"outputfile": "./results/hotpotqa/500/qa/llama-2-7b-chat-hf_pos_0_neg_2.json", "exact match": 0.16, "cover_em": 0.16, "F1": 0.1053, "length": 15.38}
