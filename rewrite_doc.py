@@ -317,7 +317,7 @@ if __name__ == "__main__":
     # 数量设置
     parser.add_argument('--nums', type=int, default=1000)
     # 输出文件设置
-    parser.add_argument('--batch_size', type=int, default=2)
+    parser.add_argument('--batch_size', type=int, default=8)
     parser.add_argument('--output_dir',type=str, default='./dataset/')
 
     args = parser.parse_args()

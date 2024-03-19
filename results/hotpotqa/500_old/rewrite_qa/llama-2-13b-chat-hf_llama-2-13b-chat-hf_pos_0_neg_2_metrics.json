@@ -1,0 +1,2 @@
+{"outputfile": "./results/hotpotqa/500/rewrite_qa/llama-2-13b-chat-hf_llama-2-13b-chat-hf_pos_0_neg_2.json", "exact match": 0.142, "cover_em": 0.142, "F1": 0.1396, "length": 8.004}
+{"outputfile": "./results/hotpotqa/500/rewrite_qa/llama-2-13b-chat-hf_llama-2-13b-chat-hf_pos_0_neg_2.json", "exact match": 0.142, "cover_em": 0.142, "F1": 0.1396, "length": 8.004}

@@ -19,8 +19,10 @@ class OpenAIChat():
             openai.api_key = "EMPTY"
             openai.api_base = "http://127.0.0.1:8000/v1"
         else:
-            openai.api_base = "https://one.aiskt.com/v1"
-            openai.api_key = 'sk-Bd2ysg0m6cQ4qVxm393aDb4720F14c10Af9cEdBf35A120Ba'
+            # openai.api_base = "https://one.aiskt.com/v1"
+            # openai.api_key = 'sk-Bd2ysg0m6cQ4qVxm393aDb4720F14c10Af9cEdBf35A120Ba'
+            openai.api_base = "https://www.gptapi.us/v1"
+            openai.api_key = 'sk-QySLhzrWw0RkL1rV2cDaBf0a229f45A190E44bE29864212a'
 
 
         self.config = {

@@ -110,7 +110,7 @@ def exact_match_score(prediction, ground_truth):
         ground_truth = ','.join(ground_truth)
         # print(ground_truth, prediction)
     # print(ground_truth, prediction)
-    return normalize_answer(ground_truth) in normalize_answer(prediction)
+    return normalize_answer(ground_truth) == normalize_answer(prediction)
 
 def cover_exact_match_score(prediction, ground_truth):
     # print(normalize_answer(prediction), normalize_answer(ground_truth))
@@ -118,6 +118,8 @@ def cover_exact_match_score(prediction, ground_truth):
         ground_truth = ','.join(ground_truth)
         # print(ground_truth, prediction)
     # print(ground_truth, prediction)
+    if normalize_answer(ground_truth) not in normalize_answer(prediction):
+        print(ground_truth, ',', prediction)
     return normalize_answer(ground_truth) in normalize_answer(prediction)
 
 
@@ -201,7 +203,7 @@ def eval_question_answering(infile, end="**"):
         if end:
             output = max(output.split(end), key=len)
             # output = output.split('\n')[0] # added 
-
+        # print(output, answer)
         if ems(output, answer): # EM evaluation
             # print(ems(output, answer))
             exact_match_count += 1

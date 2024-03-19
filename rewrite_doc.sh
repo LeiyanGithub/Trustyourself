@@ -141,7 +141,10 @@
 # python evaluate_result.py --data_path ./results/hotpotqa/500/rewrite_qa/Qwen1.5-14B-Chat_Qwen1.5-14B-Chat_pos_2_neg_2.json
 # python evaluate_result.py --data_path ./results/hotpotqa/500/rewrite_qa/Qwen1.5-14B-Chat_Qwen1.5-14B-Chat_pos_0_neg_2.json
 
-python rewrite_doc.py --dataset hotpotqa --target gpt-3.5-turbo --task rewrite_doc --promptfile myprompt --nums 500 
+# CUDA_VISIBLE_DEVICES=1 python rewrite_doc.py --dataset hotpotqa --target llama-2-7b-chat-hf --task rewrite_doc --promptfile myprompt --nums 500 
+# CUDA_VISIBLE_DEVICES=1 python rewrite_doc.py --dataset hotpotqa --target llama-2-13b-chat-hf --task rewrite_doc --promptfile myprompt --nums 500 
+python rewrite_doc.py --dataset hotpotqa --target Qwen1.5-7B-Chat --task rewrite_doc --promptfile myprompt --nums 500 
+# CUDA_VISIBLE_DEVICES=0 python rewrite_doc.py --dataset hotpotqa --target Qwen1.5-14B-Chat --task rewrite_doc --promptfile myprompt --nums 500 
 
 # python generate.py --dataset hotpotqa --source gpt-3.5-turbo --target gpt-3.5-turbo --pos_num 2 --neg_num 0 --task rewrite_qa --promptfile myprompt --nums 500 
 # python generate.py --dataset hotpotqa --source gpt-3.5-turbo --target gpt-3.5-turbo --pos_num 2 --neg_num 2 --task rewrite_qa --promptfile myprompt --nums 500 
