@@ -1,5 +1,0 @@
-{"outputfile": "./results/hotpotqa/500/gpt-3.5-turbo_pos_2_neg_0.json", "exact match": 0.7, "cover_em": 0.7, "F1": 0.5418, "length": 7.862}
-{"outputfile": "./results/hotpotqa/500/qa/gpt-3.5-turbo_pos_2_neg_0.json", "exact match": 0.808, "cover_em": 0.808, "F1": 0.0558, "length": 85.654}
-{"outputfile": "./results/hotpotqa/500/qa/gpt-3.5-turbo_pos_2_neg_0.json", "exact match": 0.824, "cover_em": 0.824, "F1": 0.0567, "length": 86.828}
-{"outputfile": "./results/hotpotqa/500/qa/gpt-3.5-turbo_pos_2_neg_0.json", "exact match": 0.838, "cover_em": 0.838, "F1": 0.0576, "length": 88.296}
-{"outputfile": "./results/hotpotqa/500/qa/gpt-3.5-turbo_pos_2_neg_0.json", "exact match": 0.0, "cover_em": 0.838, "F1": 0.0576, "length": 88.296}

@@ -1,0 +1,1 @@
+{"outputfile": "./results/hotpotqa/500/doc_rewrite_qa/llama-2-7b-chat-hf_pos_2_neg_2.json", "exact match": 0.554, "cover_em": 0.554, "F1": 0.2922, "length": 17.964}

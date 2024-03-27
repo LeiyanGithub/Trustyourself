@@ -1,0 +1,2 @@
+{"outputfile": "./results/hotpotqa/50/qa/gpt-3.5-turbo_pos_2_neg_2.json", "exact match": 0.08, "cover_em": 0.66, "F1": 0.2975, "length": 12.96}
+{"outputfile": "./results/hotpotqa/50/qa/gpt-3.5-turbo_pos_2_neg_2.json", "exact match": 0.08, "cover_em": 0.66, "F1": 0.2975, "length": 12.96}

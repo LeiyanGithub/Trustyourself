@@ -1,0 +1,3 @@
+# CUDA_VISIBLE_DEVICES=1 python generate.py --dataset hotpotqa --target llama-2-7b-chat-hf --pos_num 2 --neg_num 0 --task qa --promptfile myprompt --nums 2000
+CUDA_VISIBLE_DEVICES=0 python generate.py --dataset hotpotqa --target llama-2-7b-chat-hf --pos_num 2 --neg_num 2 --task qa --promptfile myprompt --nums 2000
+# CUDA_VISIBLE_DEVICES=1 python generate.py --dataset hotpotqa --target llama-2-7b-chat-hf --pos_num 2 --neg_num 4 --task qa --promptfile myprompt --nums 2000

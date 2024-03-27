@@ -1,0 +1,1 @@
+{"outputfile": "./results/hotpotqa/500/rewrite_qa/Qwen1.5-14B-Chat_Qwen1.5-14B-Chat_pos_2_neg_2.json", "exact match": 0.656, "cover_em": 0.656, "F1": 0.6517, "length": 5.424}

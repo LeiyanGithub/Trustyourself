@@ -120,8 +120,9 @@ def construct_prompt(args):
         for index in range(len(source_dataset)):
             # 构造promtp
             print(' '.join(source_dataset[index]['neg'][:args.neg_num]))
-            source_dataset[index]['passage'] = ' '.join(source_dataset[index]['pos'][:args.pos_num])
-            source_dataset[index]['passage'] += ' '.join(source_dataset[index]['neg'][:args.neg_num])
+            # passage = source_dataset[index]['pos'][:args.pos_num] + source_dataset[index]['neg'][:args.neg_num]
+            source_dataset[index]['passage'] = '<P> :'.join(source_dataset[index]['pos'][:args.pos_num])
+            source_dataset[index]['passage'] += '<P> :'.join(source_dataset[index]['neg'][:args.neg_num])
             input_with_prompt = add_prompt(source_dataset[index], prompt)
             temp_prompts.append({
                 "question": source_dataset[index]['question'],
@@ -345,13 +346,14 @@ if __name__ == "__main__":
     # 数量设置
     parser.add_argument('--nums', type=int, default=1000)
     # 输出文件设置
-    parser.add_argument('--batch_size', type=int, default=2)
+    parser.add_argument('--batch_size', type=int, default=16)
     parser.add_argument('--output_dir',type=str, default='./results')
 
     args = parser.parse_args()
 
     # 构造 prompt 到result file
     output_file = construct_prompt(args)
+    print("================================,", output_file)
     device = "cuda"
 
     chat = OpenAIChat('gpt-3.5-turbo')
