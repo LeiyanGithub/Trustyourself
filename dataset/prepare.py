@@ -67,11 +67,11 @@ def write_list(save_path, sample_list):
 # write_list('hotpotqa_doc.json', results)
     
 def reorganize_doc():
-    path = 'Qwen1.5-14B-Chat.json'
+    path = 'llama-2-7b-chat-hf.json'
     dataset = read_data(path)
     temp_prompts = []
     tmp = {}
-    target_file = 'Qwen1.5-14B-Chat_rewrite.json'
+    target_file = 'llama-2-7b-chat-hf_rewrite.json'
     for index in range(len(dataset)):
         if dataset[index]['idx'] not in tmp:
             tmp[dataset[index]['idx']] = {

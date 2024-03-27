@@ -106,6 +106,8 @@ def construct_prompt(args):
         index = 0
         if args.nums:
             while len(source_dataset) < args.nums:
+                if index == min(len(dataset), args.nums):
+                    break
                 if 'neg' in dataset[index]:
                     source_dataset.append(dataset[index])
                 index += 1
@@ -317,7 +319,7 @@ if __name__ == "__main__":
     # 数量设置
     parser.add_argument('--nums', type=int, default=1000)
     # 输出文件设置
-    parser.add_argument('--batch_size', type=int, default=8)
+    parser.add_argument('--batch_size', type=int, default=16)
     parser.add_argument('--output_dir',type=str, default='./dataset/')
 
     args = parser.parse_args()

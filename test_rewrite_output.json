@@ -1,0 +1,9 @@
+{"outputfile": "test_rewrite.json", "exact match": 0.0, "cover_em": 0.3333, "F1": 0.1818, "length": 21.3333}
+{"outputfile": "test_rewrite.json", "exact match": 0.0, "cover_em": 0.3333, "F1": 0.1818, "length": 21.3333}
+{"outputfile": "test_rewrite.json", "exact match": 0.0, "cover_em": 0.3333, "F1": 0.1818, "length": 3.0}
+{"outputfile": "test_rewrite.json", "exact match": 0.0, "cover_em": 0.25, "F1": 0.1364, "length": 2.25}
+{"outputfile": "test_rewrite.json", "exact match": 0.25, "cover_em": 0.25, "F1": 0.25, "length": 9.5}
+{"outputfile": "test_rewrite.json", "exact match": 0.25, "cover_em": 0.25, "F1": 0.3929, "length": 2.5}
+{"outputfile": "test_rewrite.json", "exact match": 0.2, "cover_em": 0.4, "F1": 0.3393, "length": 5.2}
+{"outputfile": "test_rewrite.json", "exact match": 0.1667, "cover_em": 0.5, "F1": 0.3013, "length": 7.3333}
+{"outputfile": "test_rewrite.json", "exact match": 0.0, "cover_em": 0.5, "F1": 0.2255, "length": 9.3333}

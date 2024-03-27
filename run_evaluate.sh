@@ -1,0 +1,1 @@
+python evaluate_result.py --data_path ./test_output/llama-2-7b-chat-hf_pos_2_neg_4.json

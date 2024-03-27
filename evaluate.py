@@ -200,8 +200,12 @@ def eval_question_answering(infile, end="**"):
     for line in lines:
         answer = line['answer']
         output = line['output'] if line['output'] else ''
-        if end:
-            output = max(output.split(end), key=len)
+        # if end:
+        #     output = max(output.split(end), key=len)
+            # if 'the answer to' in output or 'answer to your question' in output:
+            #     output = output.split(":")[-1]
+            # output = max(output.split(end), key=len)
+            # output = output.split(end)[-1]
             # output = output.split('\n')[0] # added 
         # print(output, answer)
         if ems(output, answer): # EM evaluation
